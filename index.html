@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Book Manager</h1>
+    <div id="output"></div>
+    <button onclick="createBook()">Create a book</button>
+    <button onclick="readBook()">Read a book</button>
+    <button onclick="updateBook()">Update a book</button>
+    <button onclick="deleteBook()">Delete a book</button>
+
+    <script>
+        let books = [];
+
+        function Book(title, author, genre, year) {
+            this.title = title;
+            this.author = author;
+            this.genre = genre;
+            this.year = year;
+        }
+
+        Book.prototype.displayDetails = function() {
+            let details = "Title: " + this.title + "<br>";
+            details += "Author: " + this.author + "<br>";
+            details += "Genre: " + this.genre + "<br>";
+            details += "Year: " + this.year + "<br><br>";
+            return details;
+        };
+
+        function createBook() {
+            let title = prompt("Please enter the title of the book:");
+            let author = prompt("Please enter the author of the book:");
+            let genre = prompt("Please enter the genre of the book:");
+            let year = prompt("Please enter the year of publication:");
+
+            let book = new Book(title, author, genre, year);
+            books.push(book);
+            document.getElementById("output").innerHTML += "Book added successfully!<br>";
+        }
+
+        function readBook() {
+            let title = prompt("Enter the title of the book you want to read:");
+            let found = false;
+            for (let i = 0; i < books.length; i++) {
+                if (books[i].title === title) {
+                    document.getElementById("output").innerHTML += "Book Found! Details:<br>" + books[i].displayDetails();
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                document.getElementById("output").innerHTML += "Book not found!<br>";
+            }
+        }
+
+        function updateBook() {
+            let title = prompt("Enter the title of the book you want to update:");
+            let found = false;
+            for (let i = 0; i < books.length; i++) {
+                if (books[i].title === title) {
+                    document.getElementById("output").innerHTML += "Book Found! Enter new details:<br>";
+                    books[i].title = prompt("Enter the new title:");
+                    books[i].author = prompt("Enter the new author:");
+                    books[i].genre = prompt("Enter the new genre:");
+                    books[i].year = prompt("Enter the new year of publication:");
+                    document.getElementById("output").innerHTML += "Book details updated!<br>";
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                document.getElementById("output").innerHTML += "Book not found!<br>";
+            }
+        }
+
+        function deleteBook() {
+            let title = prompt("Enter the title of the book you want to delete:");
+            let found = false;
+            for (let i = 0; i < books.length; i++) {
+                if (books[i].title === title) {
+                    books.splice(i, 1);
+                    document.getElementById("output").innerHTML += "Book deleted successfully!<br>";
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                document.getElementById("output").innerHTML += "Book not found!<br>";
+            }
+        }
+    </script>
+</body>
+</html>
